@@ -1,0 +1,37 @@
+name: pdsystem
+description: graduate
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.6 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: ^4.6.5
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.1
+  fluttertoast: ^8.2.2
+  fl_chart: ^0.62.0
+  intl: ^0.18.1
+  flutter_pickers: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: any
+  isar_generator: any
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/json/data.json
+
+  fonts:
+    - family: MyIcon
+      fonts:
+        - asset: assets/fonts/Icon.ttf
