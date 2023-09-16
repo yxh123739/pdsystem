@@ -6,16 +6,21 @@ import 'package:get/get.dart';
 class ChartPageTitle extends StatelessWidget {
   const ChartPageTitle({
     super.key,
-    this.onDate,
-    required this.dateList,
-    required this.selectedDate,
+    required this.dataList,
+    required this.selectedItem,
+    required this.title,
+    this.onItemChange,
+    this.icon = Icons.calendar_today_outlined,
   });
 
-  final Function(String? value)? onDate;
+  final Function(String? value)? onItemChange;
 
-  final List<String> dateList;
+  final List<String> dataList;
 
-  final String selectedDate;
+  final String selectedItem;
+
+  final String title;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +34,9 @@ class ChartPageTitle extends StatelessWidget {
             color: Colors.blueGrey,
           ),
         ),
-        const Text(
-          '采集日期',
-          style: TextStyle(
+        Text(
+          title,
+          style: const TextStyle(
             color: Colors.blueGrey,
             fontSize: 26,
             fontWeight: FontWeight.w700,
@@ -42,7 +47,7 @@ class ChartPageTitle extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Center(
               child: Text(
-                selectedDate,
+                selectedItem,
                 style: const TextStyle(
                   color: Colors.blueGrey,
                   fontSize: 25,
@@ -56,8 +61,8 @@ class ChartPageTitle extends StatelessWidget {
           onTap: () {
             Pickers.showSinglePicker(
               context,
-              data: dateList,
-              onConfirm: (data, position) => onDate?.call(data),
+              data: dataList,
+              onConfirm: (data, position) => onItemChange?.call(data),
               pickerStyle: PickerStyle(
                 textSize: 20,
                 backgroundColor: const Color(0xff232d37),
@@ -69,8 +74,8 @@ class ChartPageTitle extends StatelessWidget {
               ),
             );
           },
-          child: const Icon(
-            Icons.calendar_today_outlined,
+          child: Icon(
+            icon,
             color: Colors.blueGrey,
             size: 26,
           ),

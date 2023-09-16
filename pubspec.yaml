@@ -19,6 +19,8 @@ dependencies:
   fl_chart: ^0.62.0
   intl: ^0.18.1
   flutter_pickers: ^2.1.1
+  horizontal_data_table: ^4.3.1
+  data_table_2: ^2.4.2
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +37,6 @@ flutter:
     - family: MyIcon
       fonts:
         - asset: assets/fonts/Icon.ttf
+    - family: KaiShu
+      fonts:
+        - asset: assets/fonts/kai.ttf

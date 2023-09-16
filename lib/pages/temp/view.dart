@@ -15,9 +15,10 @@ class TempPage extends GetView<TempController> {
     return ChartLayout(
       children: [
         Obx(() => ChartPageTitle(
-              onDate: (value) => controller.changeDate(value!),
-              dateList: controller.dateList,
-              selectedDate: controller.selectedDate.value,
+              onItemChange: (value) => controller.changeDate(value!),
+              dataList: controller.dateList,
+              selectedItem: controller.selectedDate.value,
+              title: '采集日期',
             )),
         vBox(15),
         Obx(() {

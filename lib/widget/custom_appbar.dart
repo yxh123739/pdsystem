@@ -10,8 +10,8 @@ AppBar customAppbar({
     leading: back ? const BackButton() : null,
     centerTitle: true,
     title: titleText(color: Colors.white),
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.transparent,
     actions: actions,
-    elevation: 1,
+    elevation: 0,
   );
 }

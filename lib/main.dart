@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.grey[300],
+        fontFamily: 'KaiShu',
       ),
       getPages: Routes.routes,
       initialRoute: Routes.login,
