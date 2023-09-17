@@ -1,63 +1,64 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:pdsystem/db/db_helper.dart';
 import 'package:pdsystem/utils/date_util.dart';
 
-import '../../db/data_model.dart';
-import '../../db/db_helper.dart';
+import '../../db/table_data_model.dart';
 
 class PredictController extends GetxController {
   final time = '00:00:00'.obs;
   late Timer timer;
 
-  final selectedOption = ['相电压', 'A相电压'].obs;
-  List<DataModel> itemList = [];
-  // 主选项
-  Map<String, dynamic> options = {
-    '相电压': ['A相电压', 'B相电压', 'C相电压'],
-    '相电流': ['A相电流', 'B相电流', 'C相电流'],
-    '功率': ['有功功率', '无功功率'],
-    '双相电压': ['AB相电压', 'AC相电压', 'BC相电压'],
-    '电能指标': ['电能指标'],
-    '功率因数': ['功率因数']
-  };
+  final selectedOption = ['电压', '一小时'].obs;
+  final _timeList = [
+    '一小时',
+    '两小时',
+    '三小时',
+    '四小时',
+    '五小时',
+    '六小时',
+    '七小时',
+    '八小时',
+    '九小时',
+    '十小时',
+    '十一小时',
+    '十二小时'
+  ];
 
-  ///筛选数据存储
-  Map<String, dynamic> dataMap = {
-    '相电压': {
-      'A相电压': 'ua',
-      'B相电压': 'ub',
-      'C相电压': 'uc',
-    },
-    '相电流': {
-      'A相电流': 'ia',
-      'B相电流': 'ib',
-      'C相电流': 'ic',
-    },
-    '功率': {
-      '有功功率': 'p',
-      '无功功率': 'q',
-    },
-    '双相电压': {
-      'A相-B相电压': 'uab',
-      'A相-C相电压': 'uca',
-      'B相-C相电压': 'ubc',
-    },
-    '电能指标': {
-      '电能指标': 'epi',
-    },
-    '功率因数': {
-      '功率因数': 'pf',
-    },
-  };
+  Map<String, dynamic> options = {};
+  List<String> headerData = [
+    '参数名称',
+    '最新值',
+    '预计更新时间',
+    '最大值',
+    '预计发生时间',
+    '最小值',
+    '预计发生时间',
+    '平均值'
+  ];
+
+  ///用户选择的数据
+  ///显示在表格中每个子项的最新值，最大值，最小值，平均值
+  Map<String, TableDataModel> data = {};
+
+  Map<String, Map<String, TableDataModel>> _dbData = {};
 
   @override
-  void onInit() {
+  void onInit() async {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       time.value = DateTime.now().hms();
     });
+
+    options = {
+      '电压': _timeList,
+      '电流': _timeList,
+      '功率': _timeList,
+      '温湿度': _timeList,
+    };
+    await getData();
+
     super.onInit();
-    getModels();
   }
 
   @override
@@ -66,46 +67,18 @@ class PredictController extends GetxController {
     super.onClose();
   }
 
-  changeOptin(List<String> option) {
+  changeOption(List<String> option) async {
+    data.clear();
     selectedOption.value = option;
-    getModels();
+    await getData();
+    data.addAll(_dbData[selectedOption[0]]!);
+    update();
   }
 
-  getModels() async {
-    // 获取模型列表
-    var models = await DbHelper.queryAll();
-
-    models.shuffle();
-    models = models.sublist(0, 50);
-
-// 获取要查询的字段名
-    final fieldName = dataMap[selectedOption[0]][selectedOption[1]];
-
-// 转换为 DataModel
-    itemList = models.map((model) {
-      Map<String, dynamic> map = model.toJson();
-      return DataModel(
-        time: convertDateTimeToNumber(model.collectTime!),
-        value: map[fieldName],
-      );
-    }).toList();
-
-    ///按时间的先后顺序排序，小时为主要排序，分钟为次要排序
-    itemList.sort((a, b) {
-      if (a.time > b.time) {
-        return 1;
-      } else if (a.time < b.time) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-
-// 更新UI
-    update(['energyList']);
-  }
-
-  double convertDateTimeToNumber(DateTime datetime) {
-    return datetime.hour + datetime.minute / 60.0;
+  getData() async {
+    _dbData = await DbHelper.predictTableData(
+        predict: _timeList.indexOf(selectedOption[1]) + 1);
+    data.addAll(_dbData[selectedOption[0]]!);
+    update();
   }
 }

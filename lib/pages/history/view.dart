@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pickers/pickers.dart';
-import 'package:flutter_pickers/style/picker_style.dart';
 import 'package:get/get.dart';
 import 'package:pdsystem/pages/temp/widget/title.dart';
 import 'package:pdsystem/widget/box.dart';
 import 'package:pdsystem/widget/chart_layout.dart';
 import 'package:pdsystem/widget/m_line_chart.dart';
 
+import '../../utils/style_ext.dart';
 import 'controller.dart';
 
 class HistoryPage extends GetView<HistoryController> {
@@ -28,12 +28,8 @@ class HistoryPage extends GetView<HistoryController> {
         Row(
           children: [
             const Text(
-              '电力类别',
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+              '数据类别',
+              style: CustomStyle.bold26Black,
             ),
             hBox(15),
             Obx(() => Container(
@@ -45,11 +41,7 @@ class HistoryPage extends GetView<HistoryController> {
                   ),
                   child: Text(
                     controller.selectedOption[0],
-                    style: const TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: CustomStyle.bold26Black.copyWith(fontSize: 18),
                   ),
                 )),
             hBox(8),
@@ -62,11 +54,7 @@ class HistoryPage extends GetView<HistoryController> {
                   ),
                   child: Text(
                     controller.selectedOption[1],
-                    style: const TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: CustomStyle.bold26Black.copyWith(fontSize: 18),
                   ),
                 )),
             Expanded(child: Container()),
@@ -78,22 +66,14 @@ class HistoryPage extends GetView<HistoryController> {
                   columeNum: 2,
                   suffix: ['', '', '', '', ''],
                   onConfirm: (List p, List<int> position) {
-                    controller.changeOptin(p.cast<String>());
+                    controller.changeOption(p.cast<String>());
                   },
-                  pickerStyle: PickerStyle(
-                    textSize: 20,
-                    backgroundColor: const Color(0xff232d37),
-                    textColor: Colors.white70,
-                    headDecoration: const BoxDecoration(
-                      color: Color(0xff232d37),
-                    ),
-                    cancelButton: Container(),
-                  ),
+                  pickerStyle: CustomStyle.pickerStyle(context),
                 );
               },
               icon: const Icon(
                 Icons.settings,
-                color: Colors.blueGrey,
+                color: Colors.black,
                 size: 25,
               ),
             ),

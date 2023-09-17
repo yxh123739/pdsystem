@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pickers/pickers.dart';
 import 'package:flutter_pickers/style/picker_style.dart';
 import 'package:get/get.dart';
+import 'package:pdsystem/utils/style_ext.dart';
 
 class ChartPageTitle extends StatelessWidget {
   const ChartPageTitle({
@@ -31,16 +32,12 @@ class ChartPageTitle extends StatelessWidget {
           onPressed: Get.back,
           icon: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.blueGrey,
+            color: Colors.black,
           ),
         ),
         Text(
           title,
-          style: const TextStyle(
-            color: Colors.blueGrey,
-            fontSize: 26,
-            fontWeight: FontWeight.w700,
-          ),
+          style: CustomStyle.bold26Black,
         ),
         Expanded(
           child: Container(
@@ -48,11 +45,7 @@ class ChartPageTitle extends StatelessWidget {
             child: Center(
               child: Text(
                 selectedItem,
-                style: const TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: CustomStyle.bold26Black.copyWith(fontSize: 20),
               ),
             ),
           ),
@@ -63,21 +56,13 @@ class ChartPageTitle extends StatelessWidget {
               context,
               data: dataList,
               onConfirm: (data, position) => onItemChange?.call(data),
-              pickerStyle: PickerStyle(
-                textSize: 20,
-                backgroundColor: const Color(0xff232d37),
-                textColor: Colors.white70,
-                headDecoration: const BoxDecoration(
-                  color: Color(0xff232d37),
-                ),
-                cancelButton: Container(),
-              ),
+              pickerStyle: CustomStyle.pickerStyle(context),
             );
           },
           child: Icon(
             icon,
-            color: Colors.blueGrey,
-            size: 26,
+            color: Colors.black,
+            size: 23,
           ),
         ),
       ],

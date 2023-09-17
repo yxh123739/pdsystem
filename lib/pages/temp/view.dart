@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pdsystem/utils/style_ext.dart';
 import 'package:pdsystem/widget/box.dart';
 import 'package:pdsystem/widget/chart_layout.dart';
 import 'package:pdsystem/widget/m_line_chart.dart';
@@ -67,11 +68,7 @@ class TempPage extends GetView<TempController> {
   _titleText(String text) {
     return Text(
       text,
-      style: const TextStyle(
-        color: Colors.blueGrey,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-      ),
+      style: CustomStyle.bold26Black.copyWith(fontSize: 20),
     );
   }
 }

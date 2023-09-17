@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:pdsystem/db/data_model.dart';
 import 'dart:math' as math;
 
+import 'package:pdsystem/utils/style_ext.dart';
+
 class MyLineChart extends StatelessWidget {
   const MyLineChart({
     super.key,
     required this.datas,
     required this.unit,
   });
+
   final List<DataModel> datas;
   final String unit;
 
@@ -47,11 +50,7 @@ class MyLineChart extends StatelessWidget {
                 getTitlesWidget: (value, meta) {
                   return Text(
                     value.toInt().toString(),
-                    style: const TextStyle(
-                      color: Color(0xff68737d),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomStyle.bold26Black.copyWith(fontSize: 16),
                   );
                 },
                 interval: 3,
@@ -71,11 +70,8 @@ class MyLineChart extends StatelessWidget {
                   }
                   return Text(
                     text,
-                    style: const TextStyle(
-                      color: Color(0xff67727d),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: CustomStyle.bold26Black
+                        .copyWith(fontSize: int.parse(text) > 99 ? 12 : 15),
                   );
                 },
                 interval: tween > 100
@@ -103,8 +99,8 @@ class MyLineChart extends StatelessWidget {
           borderData: FlBorderData(
             show: true,
             border: const Border(
-              left: BorderSide(color: Color(0xff37434d), width: 1),
-              bottom: BorderSide(color: Color(0xff37434d), width: 1),
+              left: BorderSide(color: Colors.black, width: 2),
+              bottom: BorderSide(color: Colors.black, width: 2),
               top: BorderSide.none,
               right: BorderSide.none,
             ),
@@ -118,7 +114,7 @@ class MyLineChart extends StatelessWidget {
           lineBarsData: [
             LineChartBarData(
               isCurved: true,
-              color: const Color(0xff8cbebb),
+              color: Colors.green,
               barWidth: 3,
               dotData: FlDotData(
                 show: false,

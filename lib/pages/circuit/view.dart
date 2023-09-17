@@ -27,10 +27,17 @@ class CircuitPage extends GetView<CircuitController> {
         Expanded(
           child: GetBuilder<CircuitController>(
             builder: (_) {
-              return MyTable(
-                data: controller.data,
-                headerData: controller.headerData,
-              );
+              return controller.data.isEmpty
+                  ? const Center(
+                      child: Text(
+                        '加载中......',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    )
+                  : MyTable(
+                      data: controller.data,
+                      headerData: controller.headerData,
+                    );
             },
           ),
         ),

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'KaiShu',
       ),
       getPages: Routes.routes,
-      initialRoute: Routes.login,
+      initialRoute: Routes.function,
     );
   }
 }

@@ -1,19 +1,18 @@
 import 'package:get/get.dart';
 import 'package:pdsystem/db/data_model.dart';
-import 'package:pdsystem/db/energy_model.dart';
 
 import '../../db/db_helper.dart';
 
 class HistoryController extends GetxController {
   final selectedOption = ['相电压', 'A相电压'].obs;
+
   // 主选项
   Map<String, dynamic> options = {
     '相电压': ['A相电压', 'B相电压', 'C相电压'],
     '相电流': ['A相电流', 'B相电流', 'C相电流'],
-    '功率': ['有功功率', '无功功率'],
+    '功率': ['有功功率', '无功功率', '功率因数'],
     '双相电压': ['AB相电压', 'AC相电压', 'BC相电压'],
-    '电能指标': ['电能指标'],
-    '功率因数': ['功率因数']
+    '温湿度': ['温度', '湿度'],
   };
 
   ///筛选数据存储
@@ -31,17 +30,16 @@ class HistoryController extends GetxController {
     '功率': {
       '有功功率': 'p',
       '无功功率': 'q',
+      '功率因数': 'pf',
     },
     '双相电压': {
-      'A相-B相电压': 'uab',
-      'A相-C相电压': 'uca',
-      'B相-C相电压': 'ubc',
+      'AB相电压': 'uab',
+      'AC相电压': 'uca',
+      'BC相电压': 'ubc',
     },
-    '电能指标': {
-      '电能指标': 'epi',
-    },
-    '功率因数': {
-      '功率因数': 'pf',
+    '温湿度': {
+      '温度': 'temperature',
+      '湿度': 'humidity',
     },
   };
 
@@ -49,6 +47,7 @@ class HistoryController extends GetxController {
   final selectedDate = ''.obs;
 
   List<DataModel> itemList = [];
+
   @override
   void onInit() async {
     final res = await DbHelper.getDates();
@@ -85,7 +84,7 @@ class HistoryController extends GetxController {
     getModels();
   }
 
-  changeOptin(List<String> option) {
+  changeOption(List<String> option) {
     selectedOption.value = option;
     getModels();
   }

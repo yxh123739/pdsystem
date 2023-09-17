@@ -12,9 +12,7 @@ class FunctionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> titles = [
       '华润电力温州电厂脱硫项目现场终端',
-      '阳江太阳能发电厂项目终端',
-      '武汉水电站项目终端',
-      '海门核电厂项目终端'
+      '山东成环保章丘垃圾解热工程项目终端',
     ];
 
     List<Widget> listTiles = List.generate(titles.length, (index) {

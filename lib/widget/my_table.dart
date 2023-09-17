@@ -23,8 +23,8 @@ class MyTable extends StatelessWidget {
         bottomMargin: 0,
         headingRowColor:
             MaterialStateColor.resolveWith((states) => Colors.grey[850]!),
-        headingTextStyle: const TextStyle(color: Colors.blueGrey),
-        dataTextStyle: const TextStyle(color: Colors.blueGrey),
+        headingTextStyle: const TextStyle(color: Colors.white),
+        dataTextStyle: const TextStyle(color: Colors.black),
         border: TableBorder.all(color: Colors.grey[400]!),
         columns: List<DataColumn>.generate(
           headerData.length,

@@ -10,7 +10,7 @@ class ChartLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff232d37),
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Padding(
           padding:

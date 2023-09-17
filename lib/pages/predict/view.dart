@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pickers/pickers.dart';
-import 'package:flutter_pickers/style/picker_style.dart';
 import 'package:get/get.dart';
 import 'package:pdsystem/widget/chart_layout.dart';
 
+import '../../utils/style_ext.dart';
 import '../../widget/box.dart';
-import '../../widget/m_line_chart.dart';
+import '../../widget/my_table.dart';
 import 'controller.dart';
 
 class PredictPage extends GetView<PredictController> {
@@ -22,16 +22,12 @@ class PredictPage extends GetView<PredictController> {
               onPressed: Get.back,
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.blueGrey,
+                color: Colors.black,
               ),
             ),
             const Text(
-              '当前时间',
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 26,
-                fontWeight: FontWeight.w700,
-              ),
+              '数据预测',
+              style: CustomStyle.bold26Black,
             ),
             Expanded(
               child: Container(
@@ -40,25 +36,11 @@ class PredictPage extends GetView<PredictController> {
                 child: Center(
                   child: Obx(
                     () => Text(
-                      controller.time.value,
-                      style: const TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      '当前时间:${controller.time.value}',
+                      style: CustomStyle.bold26Black.copyWith(fontSize: 18),
                     ),
                   ),
                 ),
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                controller.getModels();
-              },
-              icon: const Icon(
-                Icons.refresh,
-                size: 26,
-                color: Colors.blueGrey,
               ),
             ),
           ],
@@ -67,12 +49,8 @@ class PredictPage extends GetView<PredictController> {
         Row(
           children: [
             const Text(
-              '电力类别',
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
+              '数据类别',
+              style: CustomStyle.bold26Black,
             ),
             hBox(15),
             Obx(() => Container(
@@ -84,11 +62,7 @@ class PredictPage extends GetView<PredictController> {
                   ),
                   child: Text(
                     controller.selectedOption[0],
-                    style: const TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: CustomStyle.bold26Black.copyWith(fontSize: 18),
                   ),
                 )),
             hBox(8),
@@ -101,11 +75,7 @@ class PredictPage extends GetView<PredictController> {
                   ),
                   child: Text(
                     controller.selectedOption[1],
-                    style: const TextStyle(
-                      color: Colors.blueGrey,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: CustomStyle.bold26Black.copyWith(fontSize: 18),
                   ),
                 )),
             Expanded(child: Container()),
@@ -117,22 +87,14 @@ class PredictPage extends GetView<PredictController> {
                   columeNum: 2,
                   suffix: ['', '', '', '', ''],
                   onConfirm: (List p, List<int> position) {
-                    controller.changeOptin(p.cast<String>());
+                    controller.changeOption(p.cast<String>());
                   },
-                  pickerStyle: PickerStyle(
-                    textSize: 20,
-                    backgroundColor: const Color(0xff232d37),
-                    textColor: Colors.white70,
-                    headDecoration: const BoxDecoration(
-                      color: Color(0xff232d37),
-                    ),
-                    cancelButton: Container(),
-                  ),
+                  pickerStyle: CustomStyle.pickerStyle(context),
                 );
               },
               icon: const Icon(
                 Icons.settings,
-                color: Colors.blueGrey,
+                color: Colors.black,
                 size: 25,
               ),
             ),
@@ -141,15 +103,20 @@ class PredictPage extends GetView<PredictController> {
         vBox(20),
         Expanded(
           child: GetBuilder<PredictController>(
-              id: 'energyList',
-              builder: (_) {
-                return controller.itemList.isNotEmpty
-                    ? MyLineChart(
-                        datas: controller.itemList,
-                        unit: '',
-                      )
-                    : Container();
-              }),
+            builder: (_) {
+              return controller.data.isEmpty
+                  ? const Center(
+                      child: Text(
+                        '加载中......',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    )
+                  : MyTable(
+                      data: controller.data,
+                      headerData: controller.headerData,
+                    );
+            },
+          ),
         ),
       ],
     );
